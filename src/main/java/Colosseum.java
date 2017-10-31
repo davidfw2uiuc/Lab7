@@ -17,6 +17,11 @@ public class Colosseum {
     static final int MAX_HIT_POINTS = 50;
 
     /**
+     * Maximum attack/defense level.
+     */
+    static final int SUM_ATTACK_DEFENSE = 50;
+
+    /**
      * The maximum number of rounds we will let the Pokemon battle.
      */
     static final int MAX_NUM_ROUNDS = 10;
@@ -87,30 +92,30 @@ public class Colosseum {
             tempPokemon.hitPoints = myScan.nextInt();
             if (tempPokemon.hitPoints > MAX_HIT_POINTS || tempPokemon.hitPoints < 1) {
                 System.out.println("Sorry. Hit points must be between 1 and 50: ");
-            }
-            else {
+            } else {
                 hitPointsSelected = true;
             }
         }
 
         System.out.println("Split fifty points between attack leven and defense level");
         System.out.println("Enter your attack level (1-49): ");
-        while(!attackPointsSelected) {
+        while (!attackPointsSelected) {
             tempPokemon.attackLevel = myScan.nextInt();
-            if(tempPokemon.attackLevel > 49 || tempPokemon.attackLevel < 1) {
+            if (tempPokemon.attackLevel > SUM_ATTACK_DEFENSE - 1 || tempPokemon.attackLevel < 1) {
                 System.out.println("Sorry. The attack level must be between 1 and 49: ");
-            }
-            else {
+            } else {
                 attackPointsSelected = true;
             }
         }
-        System.out.printf("Enter your defense level (1-%d): \n", 50 - tempPokemon.attackLevel);
+        System.out.printf("Enter your defense level "
+                + "(1-%d): \n", MAX_HIT_POINTS - tempPokemon.attackLevel);
         while (!defensePointsSelected) {
             tempPokemon.defenseLevel = myScan.nextInt();
-            if(tempPokemon.defenseLevel > 50 - tempPokemon.attackLevel || tempPokemon.attackLevel < 1) {
-                System.out.printf("Sorry. The attack level must be between 1 and %d: ", 50 - tempPokemon.attackLevel);
-            }
-            else {
+            if (tempPokemon.defenseLevel > SUM_ATTACK_DEFENSE  - tempPokemon.attackLevel
+                    || tempPokemon.defenseLevel < 1) {
+                System.out.printf("Sorry. The attack level must be "
+                        + "between 1 and %d: ", SUM_ATTACK_DEFENSE  - tempPokemon.attackLevel);
+            } else {
                 defensePointsSelected = true;
             }
         }
@@ -135,17 +140,15 @@ public class Colosseum {
         String name1 = firstPokemon.name, name2 = secondPokemon.name, ahead = "";
         System.out.printf("%s has %d hit points \n", name1, hp1);
         System.out.printf("%s has %d hit points \n", name2, hp2);
-        if(hp1 == hp2) {
+        if (hp1 == hp2) {
             System.out.printf("%s and %s are currently tied!", name1, name2);
-        }
-        else if(hp1 > hp2) {
+        } else if (hp1 > hp2) {
             ahead = name1;
-        }
-        else {
+        } else {
             ahead = name2;
         }
 
-        if(hp1 != hp2) {
+        if (hp1 != hp2) {
             System.out.printf("%s is currently ahead!", ahead);
         }
     }
@@ -161,7 +164,7 @@ public class Colosseum {
         int hp1 = firstPokemon.hitPoints, hp2 = secondPokemon.hitPoints;
         String name1 = firstPokemon.name, name2 = secondPokemon.name, winner = "";
         if (hp1 == 0 || hp2 == 0) {
-            if(hp1 == 0) {
+            if (hp1 == 0) {
                 winner = name2;
             } else {
                 winner = name1;
